@@ -1,0 +1,12 @@
+name: Validate Rego policies
+
+on: [pull_request]
+
+jobs:
+  opa-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: docker://openpolicyagent/opa
+        with:
+          args: 'eval --ignore=*.json --format pretty --data ./policies/test.rego --input ./policies/data.json "data"'
